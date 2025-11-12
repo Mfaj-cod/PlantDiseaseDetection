@@ -131,30 +131,26 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
     <h3 style="margin:0 0 8px 0;text-align:center;">🌟 Special thanks to</h3>
     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
         <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
-            <span style="font-size:1.4rem;">🌱</span>
             <div>
-                <strong>WorldQuant University</strong>
+                <strong>🌱 WorldQuant University</strong>
                 <div style="font-size:0.95rem;color:#a9c4a7;">for the Deep Learning Foundations</div>
             </div>
         </li>
         <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
-            <span style="font-size:1.4rem;">🔥</span>
             <div>
-                <strong>PyTorch</strong>
+                <strong>🔥 PyTorch</strong>
                 <div style="font-size:0.95rem;color:#a9c4a7;">for making model building intuitive</div>
             </div>
         </li>
         <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
-            <span style="font-size:1.4rem;">🧩</span>
             <div>
-                <strong>Flask</strong>
+                <strong>🧩 Flask</strong>
                 <div style="font-size:0.95rem;color:#a9c4a7;">for the minimalistic yet powerful web backend</div>
             </div>
         </li>
         <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
-            <span style="font-size:1.4rem;">👩‍💻</span>
             <div>
-                <strong>You</strong>
+                <strong>👩‍💻 Me</strong>
                 <div style="font-size:0.95rem;color:#a9c4a7;">for taking the time to make plants healthier <span style="margin-left:6px;">🌿</span></div>
             </div>
         </li>
@@ -169,6 +165,5 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 🍴 Fork it
 🚀 Share it
 
-<img src="https://img.shields.io/badge/Framework-PyTorch-orange?style=for-the-badge&logo=pytorch"/> <img src="https://img.shields.io/badge/Web-Framework-000000?style=for-the-badge&logo=flask"/> <img src="https://img.shields.io/badge/Frontend-HTML/CSS/JS-yellow?style=for-the-badge&logo=html5"/> </div> ```
-
+<img src="https://img.shields.io/badge/Framework-PyTorch-orange?style=for-the-badge&logo=pytorch"/> <img src="https://img.shields.io/badge/Web-Framework-000000?style=for-the-badge&logo=flask"/> <img src="https://img.shields.io/badge/Frontend-HTML/CSS/JS-yellow?style=for-the-badge&logo=html5"/> </div>
 
