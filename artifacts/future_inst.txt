@@ -1,0 +1,6 @@
+If I ever retrain and want to replace the model:
+
+mv new_model.pth artifacts/model.pth
+git add artifacts/model.pth
+git commit -m "Updated model weights"
+git push
