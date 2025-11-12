@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plant Disease Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    video, canvas {
+      border: 2px solid #28a745;
+      border-radius: 10px;
+      margin: 10px;
+    }
+    #camera, #preview {
+      display: inline-block;
+      vertical-align: top;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌿 Plant Disease Detection</h1>
+
+  <form method="POST" enctype="multipart/form-data" action="/" id="uploadForm">
+    <input type="file" name="file" accept="image/*">
+    <button type="submit">Predict from Upload</button>
+  </form>
+
+  <hr>
+
+  <div id="camera">
+    <video id="video" width="300" height="225" autoplay></video><br>
+    <button id="capture">📸 Capture Photo</button>
+  </div>
+
+  <div id="preview">
+    <canvas id="canvas" width="300" height="225"></canvas><br>
+    <button id="sendPhoto">Predict from Camera</button>
+  </div>
+
+  {% if prediction %}
+    <h2>Prediction: {{ prediction }}</h2>
+  {% endif %}
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    const captureButton = document.getElementById('capture');
+    const sendButton = document.getElementById('sendPhoto');
+
+    // Access webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+      })
+      .catch(err => {
+        console.error("Error accessing camera: ", err);
+      });
+
+    // Capture frame from video
+    captureButton.addEventListener('click', () => {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    });
+
+    // Send captured image to Flask
+    sendButton.addEventListener('click', () => {
+      canvas.toBlob(blob => {
+        const formData = new FormData();
+        formData.append('file', blob, 'capture.jpg');
+
+        fetch('/capture', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.text())
+        .then(html => {
+          document.open();
+          document.write(html);
+          document.close();
+        });
+      }, 'image/jpeg');
+    });
+  </script>
+</body>
+</html>

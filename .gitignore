@@ -1,0 +1,16 @@
+plantenv/
+/plantenv
+*plantenv
+
+data/
+/data
+*data
+
+__pycache__/
+/__pycache__
+*.class
+*.pyc
+
+logs/
+*.log
+/logs/app.log
