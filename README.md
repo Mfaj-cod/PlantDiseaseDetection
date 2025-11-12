@@ -44,7 +44,7 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 ---
 
 ## 🧠 **Model Architecture**
-
+``bash
 Input (3x224x224)
 │
 ├── Conv2D(3 → 16, 3x3) → ReLU → MaxPool(2x2)
