@@ -110,10 +110,8 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 ---
 
 
-```html
+## 🎯 Live Camera Mode
 <div align="center">
-
-🎯 Live Camera Mode
 
 <p style="font-size: 1.1rem; margin: 12px 0;">💡 Take a live photo using your webcam directly in the browser:</p>
 
@@ -124,7 +122,7 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 </div>
 
 </div>
-```
+
 
 ---
 
