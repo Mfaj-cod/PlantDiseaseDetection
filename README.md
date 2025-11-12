@@ -44,16 +44,40 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 ---
 
 ## 🧠 **Model Architecture**
-``bash
-Input (3x224x224)
-│
-├── Conv2D(3 → 16, 3x3) → ReLU → MaxPool(2x2)
-├── Conv2D(16 → 32, 3x3) → ReLU → MaxPool(2x2)
-├── Conv2D(32 → 64, 3x3) → ReLU → MaxPool(2x2)
-│
-├── Flatten → Dropout(0.5)
-├── Linear(642828 → 500) → ReLU → Dropout
-└── Linear(500 → num_classes)
+<ol>
+    <li>Input (3×224×224)</li>
+    <li>Conv Block 1
+        <ol>
+            <li>Conv2D(3 → 16, 3×3)</li>
+            <li>ReLU</li>
+            <li>MaxPool(2×2)</li>
+        </ol>
+    </li>
+    <li>Conv Block 2
+        <ol>
+            <li>Conv2D(16 → 32, 3×3)</li>
+            <li>ReLU</li>
+            <li>MaxPool(2×2)</li>
+        </ol>
+    </li>
+    <li>Conv Block 3
+        <ol>
+            <li>Conv2D(32 → 64, 3×3)</li>
+            <li>ReLU</li>
+            <li>MaxPool(2×2)</li>
+        </ol>
+    </li>
+    <li>Classifier
+        <ol>
+            <li>Flatten</li>
+            <li>Dropout(0.5)</li>
+            <li>Linear(642828 → 500)</li>
+            <li>ReLU</li>
+            <li>Dropout</li>
+            <li>Linear(500 → num_classes)</li>
+        </ol>
+    </li>
+</ol>
 
 ---
 
