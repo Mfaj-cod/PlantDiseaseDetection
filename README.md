@@ -86,7 +86,7 @@ Input (3x224x224)
 ---
 
 ## 🌾 Web App Preview
-<div align="center"> <img src="https://user-images.githubusercontent.com/11388939/172871452-1fdb5f29-c429-47c2-8097-2c23838de23f.jpg" width="350"> <br><br> <b>Prediction:</b> 🍏 Apple Scab </div>
+<div align="center"> <img src="D:\WorldQuantUniversity\Projects\PlantDiseaseDetection\data\Apple___Apple_scab\0a5e9323-dbad-432d-ac58-d291718345d9___FREC_Scab 3417_90deg.JPG" width="350"> <br><br> <b>Prediction:</b> 🍏 Apple Scab </div>
 
 ---
 
