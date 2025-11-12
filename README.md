@@ -85,10 +85,6 @@ Input (3x224x224)
 
 ---
 
-## 🌾 Web App Preview
-<div align="center"> <img src="D:\WorldQuantUniversity\Projects\PlantDiseaseDetection\data\Apple___Apple_scab\0a5e9323-dbad-432d-ac58-d291718345d9___FREC_Scab 3417_90deg.JPG" width="350"> <br><br> <b>Prediction:</b> 🍏 Apple Scab </div>
-
----
 
 ## 🎯 Live Camera Mode
 
