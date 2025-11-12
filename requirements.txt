@@ -10,4 +10,3 @@ torchinfo
 torchvision
 flask
 ipywidgets
-model_definition
