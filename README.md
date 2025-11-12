@@ -83,7 +83,7 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 
 📉 **Loss:** CrossEntropyLoss  
 ⚡ **Optimizer:** Adam (lr=0.001)  
-🎯 **Accuracy:** ~92% Validation Accuracy  
+🎯 **Accuracy:** ~93% Validation Accuracy  
 
 ---
 
@@ -105,40 +105,63 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 | 🧾 Validation Accuracy | 93%           |
 | 🧠 Loss Function       | Cross-Entropy |
 | ⚡ Optimizer           | Adam          |
-| 🕒 Epochs              | 15            |
+| 🕒 Epochs              | 8             |
 
 ---
 
 
-## 🎯 Live Camera Mode
+```html
+<div align="center">
 
-💡 Take a live photo using your webcam directly in the browser:
+🎯 Live Camera Mode
 
-Click 📸 Capture Photo
+<p style="font-size: 1.1rem; margin: 12px 0;">💡 Take a live photo using your webcam directly in the browser:</p>
 
-Then click Predict from Camera
+<div style="background: #0b1220; padding: 20px; border-radius: 10px; max-width: 600px; margin: 20px auto; color: #dbe9d9;">
+    <p style="margin: 10px 0;"><strong>Click 📸 Capture Photo</strong></p>
+    <p style="margin: 10px 0;"><strong>Then click Predict from Camera</strong></p>
+    <p style="margin: 10px 0;"><strong>Get instant results using your trained CNN model 🚀</strong></p>
+</div>
 
-Get instant results using your trained CNN model 🚀
-
----
-
-## 🔮 Future Roadmap
-
-✅ Deploy to Render / Hugging Face Spaces
-✅ Add Grad-CAM Heatmap Visualization
-✅ Multi-Plant Species Support
-✅ User History & Analytics Dashboard
-✅ Mobile Responsive PWA Version
+</div>
+```
 
 ---
 
 ## ❤️ Acknowledgements
-
-Special thanks to:
-🌱 WorldQuant University — for the Deep Learning Foundations
-🔥 PyTorch — for making model building intuitive
-🧩 Flask — for the minimalistic yet powerful web backend
-👩‍💻 You — for taking the time to make plants healthier 🌿
+<div class="acknowledgements" style="background:#0b1220;color:#dbe9d9;padding:16px;border-radius:10px;max-width:760px;margin:12px auto;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+    <h3 style="margin:0 0 8px 0;text-align:center;">🌟 Special thanks to</h3>
+    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
+        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
+            <span style="font-size:1.4rem;">🌱</span>
+            <div>
+                <strong>WorldQuant University</strong>
+                <div style="font-size:0.95rem;color:#a9c4a7;">for the Deep Learning Foundations</div>
+            </div>
+        </li>
+        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
+            <span style="font-size:1.4rem;">🔥</span>
+            <div>
+                <strong>PyTorch</strong>
+                <div style="font-size:0.95rem;color:#a9c4a7;">for making model building intuitive</div>
+            </div>
+        </li>
+        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
+            <span style="font-size:1.4rem;">🧩</span>
+            <div>
+                <strong>Flask</strong>
+                <div style="font-size:0.95rem;color:#a9c4a7;">for the minimalistic yet powerful web backend</div>
+            </div>
+        </li>
+        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
+            <span style="font-size:1.4rem;">👩‍💻</span>
+            <div>
+                <strong>You</strong>
+                <div style="font-size:0.95rem;color:#a9c4a7;">for taking the time to make plants healthier <span style="margin-left:6px;">🌿</span></div>
+            </div>
+        </li>
+    </ul>
+</div>
 
 ---
 
