@@ -5,29 +5,30 @@ import torchvision.transforms as transforms
 from PIL import Image
 import io
 from modules.logging import logger
-from modules.create_model import create_model_loss_optim  # <-- Import your function
+from modules.create_model import create_model_loss_optim 
 
 try:
     import google.generativeai as genai
-except ImportError:  # pragma: no cover - optional dependency
+except ImportError: 
     genai = None
 
-# Initialize Flask app
+
 app = Flask(__name__)
 
 
-# Create the same model architecture
-num_classes = 23  #the number of classes you trained with
+# model architecture
+num_classes = 23  #the number of classes
 model, _, _ = create_model_loss_optim(num_classes)
 
-# Load your saved weights
+# Loading saved weights
 model_path = "artifacts/model.pth"
 model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
 logger.info(f"Loaded model weights from {model_path}")
-# Set to evaluation mode
+
+# to evaluation mode
 model.eval()
 
-# Define transforms
+# transforms using same mean and std as used during training
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
@@ -36,7 +37,7 @@ transform = transforms.Compose([
 ])
 
 
-# Define label mapping (adjust to your dataset)
+# label mapping
 class_names = ['Apple___Apple_scab', 'Apple___Black_rot', 'Apple___Cedar_apple_rust', 'Apple___healthy', 'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot', 'Corn_(maize)___Common_rust_', 'Corn_(maize)___Northern_Leaf_Blight', 'Corn_(maize)___healthy', 'Pepper__bell___Bacterial_spot', 'Pepper__bell___healthy', 'Potato___Early_blight', 'Potato___Late_blight', 'Potato___healthy', 'Tomato_Bacterial_spot', 'Tomato_Early_blight', 'Tomato_Late_blight', 'Tomato_Leaf_Mold', 'Tomato_Septoria_leaf_spot', 'Tomato_Spider_mites_Two_spotted_spider_mite', 'Tomato__Target_Spot', 'Tomato__Tomato_YellowLeaf__Curl_Virus', 'Tomato__Tomato_mosaic_virus', 'Tomato_healthy']
 
 
@@ -65,7 +66,7 @@ elif genai is None:
 
 def predict_image(image_bytes):
     image = Image.open(io.BytesIO(image_bytes)).convert('RGB')
-    img_tensor = transform(image).unsqueeze(0)  # Add batch dimension
+    img_tensor = transform(image).unsqueeze(0)
     with torch.no_grad():
         outputs = model(img_tensor)
         _, predicted = torch.max(outputs, 1)
@@ -93,7 +94,7 @@ def get_disease_remedy(disease_name: str):
             logger.warning("Gemini returned an empty remedy for %s.", disease_name)
             return "No remedy suggestion returned by Gemini."
         return text
-    except Exception as exc:  # pragma: no cover - depends on external API
+    except Exception as exc:
         logger.exception("Gemini remedy generation failed for %s: %s", disease_name, exc)
         return "Unable to retrieve remedy suggestion at this time."
 

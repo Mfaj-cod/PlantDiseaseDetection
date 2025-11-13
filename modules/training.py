@@ -7,7 +7,7 @@ def train_epoch(model, optimizer, loss_fn, data_loader, device="cpu"):
     training_loss = 0.0
     model.train()
 
-    # Iterate over all batches in the training set to complete one epoch
+    # Iterating over all batches in the training set to complete one epoch
     for inputs, targets in tqdm(data_loader, desc="Training", leave=False):
         optimizer.zero_grad()
         inputs = inputs.to(device)
@@ -34,17 +34,17 @@ def train(
     device="cpu",
     use_train_accuracy=True,
 ):
-    # Track the model progress over epochs
+    # model progress over epochs
     train_losses = []
     train_accuracies = []
     val_losses = []
     val_accuracies = []
 
     for epoch in range(1, epochs + 1):
-        # Train one epoch
+        # Training one epoch
         training_loss = train_epoch(model, optimizer, loss_fn, train_loader, device)
 
-        # Evaluate training results
+        # Evaluating training results
         if use_train_accuracy:
             train_loss, train_accuracy = score(model, train_loader, loss_fn, device)
         else:
@@ -53,7 +53,7 @@ def train(
         train_losses.append(train_loss)
         train_accuracies.append(train_accuracy)
 
-        # Test on validation set
+        # Testing on validation set
         validation_loss, validation_accuracy = score(model, val_loader, loss_fn, device)
         val_losses.append(validation_loss)
         val_accuracies.append(validation_accuracy)
