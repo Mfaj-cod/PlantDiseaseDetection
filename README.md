@@ -36,7 +36,7 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 |-------------|----------|
 | 💻 **Frontend** | HTML5, CSS3, JavaScript (Webcam API) |
 | ⚙️ **Backend** | Flask |
-| 🧠 **AI Model** | PyTorch (CNN) | gemini |
+| 🧠 **AI Model** | PyTorch (CNN), gemini |
 | 🧾 **Data Processing** | NumPy, PIL, TorchVision |
 | 🎨 **Design** | Responsive Dark UI |
 | ☁️ **Deployment Ready** | Render / Streamlit Cloud / Hugging Face Spaces |
