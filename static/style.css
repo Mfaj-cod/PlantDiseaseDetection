@@ -1,15 +1,375 @@
-body {
-  background-color: #111;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 50px;
+/* Dark, modern UI */
+
+:root {
+  --bg: #0b1020;
+  --bg-elev: #111832;
+  --bg-elev-2: #0f1530;
+  --text: #e6f1ee;
+  --muted: #9fb3c8;
+  --primary: #60e0a7;
+  --primary-2: #2bd48f;
+  --accent: #8ab4ff;
+  --danger: #ff6b6b;
+  --border: #1e2a4a;
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  --panel-min-h: 520px;
 }
-button {
-  padding: 10px 20px;
-  margin-top: 10px;
-  background-color: #28a745;
-  color: white;
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(86, 120, 255, 0.10), transparent 50%),
+    radial-gradient(1000px 500px at 110% 10%, rgba(61, 214, 155, 0.10), transparent 50%),
+    linear-gradient(180deg, #060a18 0%, #0b1020 100%);
+  color: var(--text);
+  font-family: 'Montserrat', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin: 36px 12px 12px 12px;
+  color: var(--text);
+  letter-spacing: 0.2px;
+  text-shadow: 0 6px 20px rgba(138,180,255,.18);
+}
+
+hr {
   border: none;
-  border-radius: 8px;
+  border-top: 1px solid var(--border);
+  margin: 34px auto 26px auto;
+  width: 75%;
+}
+
+/* Upload form */
+form#uploadForm {
+  background: linear-gradient(180deg, var(--bg-elev) 0%, var(--bg-elev-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  margin: 0; /* align to left column without extra vertical gaps */
+  width: 100%;
+  min-width: 0;
+  padding: 22px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+input[type="file"] {
+  display: block;
+  margin: 0 auto 8px auto;
+  font-size: 1rem;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #0c1228;
+  color: var(--text);
+  border: 1px solid var(--border);
+  transition: border 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+input[type="file"]::file-selector-button {
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-2) 100%);
+  color: #05121a;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-right: 12px;
+  cursor: pointer;
+  font-weight: 700;
+}
+input[type="file"]:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(138,180,255,.18);
+}
+
+/* Buttons */
+button {
+  display: inline-block;
+  font-size: 1.02rem;
+  font-weight: 700;
+  padding: 12px 26px;
+  border-radius: 12px;
+  border: 1px solid rgba(96,224,167,.25);
+  outline: none;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-2) 100%);
+  color: #07131b;
+  box-shadow: 0 6px 20px rgba(43,212,143,.25);
+  cursor: pointer;
+  margin: 6px 0;
+  transition: transform 0.12s ease, filter 0.2s ease;
+}
+button:hover, button:focus {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: grayscale(0.2) brightness(0.9);
+}
+
+#stopCamera {
+  background: linear-gradient(90deg, #ff8a8a 0%, #ff6b6b 100%);
+  color: #220a0a;
+  border-color: rgba(255,107,107,.25);
+  box-shadow: 0 6px 20px rgba(255,107,107,.22);
+}
+
+/* Camera section */
+.camera-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px; /* match left-pane gap */
+  margin: 0; /* remove extra spacing below */
+  padding: 0; /* no internal padding for consistent edges */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#camera, #preview {
+  background: linear-gradient(180deg, var(--bg-elev) 0%, var(--bg-elev-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 16px 18px 18px 18px;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--panel-min-h);
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.camera-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.camera-controls label {
+  font-size: 0.95rem;
+  color: var(--muted);
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  user-select: none;
+}
+
+video, canvas {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  margin: 10px auto 14px auto;
+  display: block;
+  box-shadow: 0 6px 22px rgba(0,0,0,.35);
+  width: 100%;
+  max-width: 100%;
+  background: #0c1326;
+  aspect-ratio: 4 / 3;
+  height: auto;
+}
+
+/* Prediction */
+.prediction-container {
+  width: 100%;
+  max-width: 530px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, var(--bg-elev) 0%, var(--bg-elev-2) 100%);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 22px 20px;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .prediction-container {
+    max-width: 100%;
+  }
+}
+.prediction-container h2 {
+  font-size: 1.32rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 8px 0;
+  letter-spacing: 0.4px;
+}
+.prediction-container h2 span:last-child {
+  color: var(--primary);
+}
+
+.remedy {
+  margin-top: 16px;
+  background: #0c1326;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 16px 16px;
+  text-align: left;
+}
+.remedy h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.05rem;
+  color: var(--accent);
+  letter-spacing: 0.4px;
+}
+.remedy p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--muted);
+  white-space: pre-wrap;
+}
+
+/* Two-column layout */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 14px;
+  box-sizing: border-box;
+}
+.left-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+.right-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.facts {
+  background: linear-gradient(180deg, var(--bg-elev) 0%, var(--bg-elev-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+.facts-header {
+  color: var(--accent);
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  margin-bottom: 10px;
+}
+.facts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.fact-card {
+  background: #0c1326;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+}
+.fact-title {
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.fact-body {
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .right-pane {
+    order: 2;
+  }
+  .left-pane {
+    order: 1;
+  }
+  .camera-section { grid-template-columns: 1fr; }
+  #camera, #preview { min-height: 0; }
+}
+
+/* Tablet and below */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.9rem;
+    margin: 24px 10px 10px 10px;
+  }
+  .layout {
+    gap: 18px;
+    padding: 0 10px;
+  }
+  form#uploadForm {
+    padding: 16px 14px;
+  }
+  .camera-section {
+    gap: 12px;
+  }
+  #camera, #preview {
+    padding: 14px;
+    min-height: 0;
+  }
+  video, canvas {
+    border-radius: 10px;
+  }
+  .prediction-container {
+    max-width: 100%;
+  }
+  .facts {
+    padding: 14px;
+  }
+  .facts-grid {
+    grid-template-columns: 1fr;
+  }
+  button {
+    width: 100%;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.6rem;
+    margin-top: 18px;
+  }
+  input[type="file"] {
+    font-size: 0.95rem;
+    padding: 9px 10px;
+  }
+  input[type="file"]::file-selector-button {
+    padding: 9px 12px;
+    font-size: 0.95rem;
+  }
+  .camera-controls {
+    gap: 8px;
+  }
+  .remedy p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
+@media (max-width: 540px) {
+  h1 { font-size: 1.8rem; margin-top: 24px;}
+  form#uploadForm { padding: 14px 10px; margin: 18px 10px; }
+  video, canvas { min-width: unset; min-height: unset; width: 100%; height: auto;}
 }

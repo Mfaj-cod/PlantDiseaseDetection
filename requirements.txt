@@ -10,3 +10,4 @@ torchinfo
 torchvision
 flask
 ipywidgets
+google-generativeai

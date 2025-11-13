@@ -4,41 +4,100 @@
   <meta charset="UTF-8">
   <title>Plant Disease Detection</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <style>
-    video, canvas {
-      border: 2px solid #28a745;
-      border-radius: 10px;
-      margin: 10px;
-    }
-    #camera, #preview {
-      display: inline-block;
-      vertical-align: top;
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+
 </head>
 <body>
   <h1>🌿 Plant Disease Detection</h1>
 
-  <form method="POST" enctype="multipart/form-data" action="/" id="uploadForm">
-    <input type="file" name="file" accept="image/*">
-    <button type="submit">Predict from Upload</button>
-  </form>
+  <div class="layout">
+    <div class="left-pane">
+      <form method="POST" enctype="multipart/form-data" action="/" id="uploadForm">
+        <label style="font-weight:600;color:#9fb3c8;font-size:1.0em;margin-bottom:6px;display:block;" for="file-upload">
+          Upload Leaf Image
+        </label>
+        <input id="file-upload" type="file" name="file" accept="image/*">
+        <button type="submit">
+          Predict from Upload
+        </button>
+      </form>
 
-  <hr>
+      <div class="camera-section">
+        <div id="camera">
+          <span style="font-weight:600;color:#9fb3c8;display:block;margin-bottom:6px;font-size:1.0em;">Live Camera</span>
+          <div class="camera-controls">
+            <button id="enableCamera" type="button">Enable Camera</button>
+            <button id="stopCamera" type="button">Stop Camera</button>
+            <label for="useBack"><input id="useBack" type="checkbox">Use back camera (if available)</label>
+          </div>
+          <video id="video" width="300" height="225" autoplay playsinline></video>
+          <button id="capture" type="button">
+            <span style="vertical-align:middle; font-size:1.13em; margin-right:7px;">📸</span>
+            Capture Photo
+          </button>
+          <div style="color:#ff6b6b;font-size:0.88em;margin-top:8px;min-height:22px;" id="camera-error"></div>
+        </div>
 
-  <div id="camera">
-    <video id="video" width="300" height="225" autoplay></video><br>
-    <button id="capture">📸 Capture Photo</button>
+        <div id="preview">
+          <span style="font-weight:600;color:#9fb3c8;display:block;margin-bottom:6px;font-size:1.0em;">Preview</span>
+          <canvas id="canvas" width="300" height="225"></canvas>
+          <button id="sendPhoto" type="button">
+            <span style="vertical-align:middle; font-size:1.11em; margin-right:8px;">🤖</span>
+            Predict from Camera
+          </button>
+          <div style="color:#9fb3c8;font-size:0.90em;margin-top:8px;" id="preview-info">
+            Enable camera and capture an image before predicting.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-pane">
+      <div class="prediction-container">
+        <h2>
+          <span style="font-size:1.25em;vertical-align:middle;">🩺</span>
+          Prediction:
+          <span>{{ prediction if prediction else '—' }}</span>
+        </h2>
+        <div class="remedy">
+          <h3>🌱 Suggested Remedy</h3>
+          <p>{{ remedy if remedy else 'Upload or capture a leaf image to get an AI-generated treatment and prevention plan.' }}</p>
+        </div>
+      </div>
+
+      <div class="facts">
+        <div class="facts-header">Farming Insights</div>
+        <div class="facts-grid">
+          <div class="fact-card">
+            <div class="fact-title">Watering</div>
+            <div class="fact-body">Water early morning to reduce evaporation and prevent fungal growth.</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-title">Soil Health</div>
+            <div class="fact-body">Add compost and rotate crops annually to maintain nutrients.</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-title">Integrated Pest Management</div>
+            <div class="fact-body">Combine monitoring, cultural controls, and targeted treatments to minimize chemicals.</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-title">Sanitation</div>
+            <div class="fact-body">Remove infected debris promptly to limit pathogen spread.</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-title">Spacing</div>
+            <div class="fact-body">Ensure airflow between plants to reduce humidity and disease risk.</div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-title">Scouting</div>
+            <div class="fact-body">Inspect leaves weekly; early detection prevents outbreaks.</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div id="preview">
-    <canvas id="canvas" width="300" height="225"></canvas><br>
-    <button id="sendPhoto">Predict from Camera</button>
-  </div>
-
-  {% if prediction %}
-    <h2>Prediction: {{ prediction }}</h2>
-  {% endif %}
 
   <script>
     const video = document.getElementById('video');
@@ -46,15 +105,66 @@
     const context = canvas.getContext('2d');
     const captureButton = document.getElementById('capture');
     const sendButton = document.getElementById('sendPhoto');
+    const cameraError = document.getElementById('camera-error');
+    const previewInfo = document.getElementById('preview-info');
+    const enableCameraBtn = document.getElementById('enableCamera');
+    const stopCameraBtn = document.getElementById('stopCamera');
+    const useBackCheckbox = document.getElementById('useBack');
 
-    // Access webcam
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
+    let currentStream = null;
+
+    function setCaptureEnabled(enabled) {
+      captureButton.disabled = !enabled;
+      sendButton.disabled = !enabled;
+    }
+
+    async function startCamera(useBack) {
+      try {
+        const primary = useBack ? { video: { facingMode: { exact: 'environment' } } } : { video: true };
+        const fallback = { video: true };
+
+        let stream;
+        try {
+          stream = await navigator.mediaDevices.getUserMedia(primary);
+        } catch (err) {
+          if (useBack) {
+            stream = await navigator.mediaDevices.getUserMedia(fallback);
+          } else {
+            throw err;
+          }
+        }
+
+        if (currentStream) {
+          currentStream.getTracks().forEach(t => t.stop());
+        }
+        currentStream = stream;
         video.srcObject = stream;
-      })
-      .catch(err => {
-        console.error("Error accessing camera: ", err);
-      });
+        cameraError.textContent = '';
+        previewInfo.textContent = 'Camera ready. Capture an image.';
+        setCaptureEnabled(true);
+      } catch (err) {
+        console.error('Error accessing camera: ', err);
+        cameraError.textContent = 'Unable to access camera. Check permissions or try a different device.';
+        setCaptureEnabled(false);
+      }
+    }
+
+    function stopCamera() {
+      if (currentStream) {
+        currentStream.getTracks().forEach(t => t.stop());
+        currentStream = null;
+      }
+      video.srcObject = null;
+      previewInfo.textContent = 'Camera stopped.';
+      setCaptureEnabled(false);
+    }
+
+    // Initialize UI state
+    setCaptureEnabled(false);
+    previewInfo.textContent = 'Enable camera, then capture an image before predicting.';
+
+    enableCameraBtn.addEventListener('click', () => startCamera(useBackCheckbox.checked));
+    stopCameraBtn.addEventListener('click', stopCamera);
 
     // Capture frame from video
     captureButton.addEventListener('click', () => {
