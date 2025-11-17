@@ -63,7 +63,7 @@
         </h2>
         <div class="remedy">
           <h3>🌱 Suggested Remedy</h3>
-          <p>{{ remedy if remedy else 'Upload or capture a leaf image to get an AI-generated treatment and prevention plan.' }}</p>
+          <p>{{ remedy|safe if remedy else 'Upload or capture a leaf image to get an AI-generated treatment and prevention plan.' }}</p>
         </div>
       </div>
 

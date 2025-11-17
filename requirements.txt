@@ -11,3 +11,4 @@ torchvision
 flask
 ipywidgets
 google-generativeai
+python-dotenv

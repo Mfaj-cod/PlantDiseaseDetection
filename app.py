@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 from flask import Flask, render_template, request
 import torch
 import torchvision.transforms as transforms
@@ -41,6 +42,8 @@ transform = transforms.Compose([
 class_names = ['Apple___Apple_scab', 'Apple___Black_rot', 'Apple___Cedar_apple_rust', 'Apple___healthy', 'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot', 'Corn_(maize)___Common_rust_', 'Corn_(maize)___Northern_Leaf_Blight', 'Corn_(maize)___healthy', 'Pepper__bell___Bacterial_spot', 'Pepper__bell___healthy', 'Potato___Early_blight', 'Potato___Late_blight', 'Potato___healthy', 'Tomato_Bacterial_spot', 'Tomato_Early_blight', 'Tomato_Late_blight', 'Tomato_Leaf_Mold', 'Tomato_Septoria_leaf_spot', 'Tomato_Spider_mites_Two_spotted_spider_mite', 'Tomato__Target_Spot', 'Tomato__Tomato_YellowLeaf__Curl_Virus', 'Tomato__Tomato_mosaic_virus', 'Tomato_healthy']
 
 
+# Loading environment variables from .env file
+load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL_NAME")
@@ -90,7 +93,7 @@ def get_disease_remedy(disease_name: str):
     prompt = (
         "You are an agricultural expert. In 2-4 sentences, describe an actionable treatment and "
         "prevention plan for the plant disease '{disease}'. Include specific chemical or organic "
-        "treatments, cultural practices, and preventive tips. All in hindi because it's for Indian farmers."
+        "treatments, cultural practices, and preventive tips. All in Hinglish and simple language because it's for Indian farmers."
     ).format(disease=disease_name.replace("_", " "))
 
     try:
@@ -100,7 +103,17 @@ def get_disease_remedy(disease_name: str):
         if not text:
             logger.warning("Gemini returned an empty remedy for %s.", disease_name)
             return "No remedy suggestion returned by Gemini."
-        return text
+        
+        # Converting markdown bold (**text**) to HTML bold (<strong>text</strong>)
+        text = text.replace("**", "<strong>")
+
+        # Replace remaining ** with </strong> (every other occurrence)
+        parts = text.split("<strong>")
+        formatted_text = parts[0]
+        for i in range(1, len(parts)):
+            formatted_text += "<strong>" + parts[i].replace("**", "</strong>", 1)
+        
+        return formatted_text
     
     except Exception as exc:
         logger.exception("Gemini remedy generation failed for %s: %s", disease_name, exc)
