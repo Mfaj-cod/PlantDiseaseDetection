@@ -83,9 +83,11 @@ def predict_image(image_bytes):
 
 
 
+
 def get_disease_remedy(disease_name: str):
-    if not disease_name:
-        return None
+    # Only proceed when there's an actual prediction
+    if not disease_name or disease_name == "No Prediction" or disease_name.strip() == "":
+        return None  # Do NOT trigger Gemini
 
     if gemini_model is None:
         return "Remedy suggestions unavailable. Check Gemini configuration."
@@ -93,7 +95,8 @@ def get_disease_remedy(disease_name: str):
     prompt = (
         "You are an agricultural expert. In 2-4 sentences, describe an actionable treatment and "
         "prevention plan for the plant disease '{disease}'. Include specific chemical or organic "
-        "treatments, cultural practices, and preventive tips. All in Hinglish and simple language because it's for Indian farmers."
+        "treatments, cultural practices, and preventive tips and if the disease includes 'healthy', don't recommend any chemical just give some suggestions to keep it healthy. All in Hindi and simple language "
+        "because it's for Indian farmers."
     ).format(disease=disease_name.replace("_", " "))
 
     try:
@@ -104,21 +107,22 @@ def get_disease_remedy(disease_name: str):
             logger.warning("Gemini returned an empty remedy for %s.", disease_name)
             return "No remedy suggestion returned by Gemini."
         
-        # Converting markdown bold (**text**) to HTML bold (<strong>text</strong>)
-        text = text.replace("**", "<strong>")
+        # Convert **text** to <strong>text</strong>
+        parts = text.split("**")
+        formatted_text = ""
+        toggle = True
+        for part in parts:
+            if toggle:
+                formatted_text += part
+            else:
+                formatted_text += f"<strong>{part}</strong>"
+            toggle = not toggle
 
-        # Replace remaining ** with </strong> (every other occurrence)
-        parts = text.split("<strong>")
-        formatted_text = parts[0]
-        for i in range(1, len(parts)):
-            formatted_text += "<strong>" + parts[i].replace("**", "</strong>", 1)
-        
         return formatted_text
     
     except Exception as exc:
         logger.exception("Gemini remedy generation failed for %s: %s", disease_name, exc)
         return "Unable to retrieve remedy suggestion at this time."
-
 
 
 
