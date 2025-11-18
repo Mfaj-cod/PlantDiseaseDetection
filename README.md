@@ -83,7 +83,7 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 
 📉 **Loss:** CrossEntropyLoss  
 ⚡ **Optimizer:** Adam (lr=0.001)  
-🎯 **Accuracy:** ~93% Validation Accuracy  
+🎯 **Accuracy:** ~94% Validation Accuracy  
 
 ---
 
@@ -132,11 +132,11 @@ Once configured, every prediction response includes an actionable remedy plan ge
 
 | Metric                 | Value         |
 | :--------------------- | :------------ |
-| 🧮 Training Accuracy   | 95%           |
-| 🧾 Validation Accuracy | 93%           |
+| 🧮 Training Accuracy   | 97%           |
+| 🧾 Validation Accuracy | 94%           |
 | 🧠 Loss Function       | Cross-Entropy |
 | ⚡ Optimizer           | Adam          |
-| 🕒 Epochs              | 8             |
+| 🕒 Epochs              | 5             |
 
 ---
 
