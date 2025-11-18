@@ -55,14 +55,14 @@ def execute_pipeline():
         sys.exit(1)
 
     try:
-        # Training for 4 epochs
+        # Training for 5 epochs
         train(
             model,
             optimizer,
             loss_fn,
             train_loader,
             val_loader,
-            epochs=4,
+            epochs=5,
             device="cpu",
             use_train_accuracy=True,
         )
@@ -73,8 +73,10 @@ def execute_pipeline():
         sys.exit(1)
 
     try:
+        # ensuring the artifacts directory exists
+        os.makedirs("D:/WorldQuantUniversity/Projects/PlantDiseaseDetection/artifacts", exist_ok=True)
         # Saving the trained model
-        torch.save(model.state_dict(), "../artifacts/ModelPlus.pth")
+        torch.save(model.state_dict(), "D:/WorldQuantUniversity/Projects/PlantDiseaseDetection/artifacts/ModelPlus.pth")
 
         logger.info("Model saved successfully!")
     except Exception as e:

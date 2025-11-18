@@ -1,3 +1,5 @@
+import os
+import torch
 from tqdm.notebook import tqdm
 from .logging import logger
 from .evaluation import score
@@ -23,22 +25,26 @@ def train_epoch(model, optimizer, loss_fn, data_loader, device="cpu"):
     return training_loss / len(data_loader.dataset)
 
 
-
 def train(
     model,
     optimizer,
     loss_fn,
     train_loader,
     val_loader,
-    epochs=4,
+    epochs=5,
     device="cpu",
     use_train_accuracy=True,
+    checkpoint_dir="D:/WorldQuantUniversity/Projects/PlantDiseaseDetection/artifacts/checkpoints",
 ):
     # model progress over epochs
     train_losses = []
     train_accuracies = []
     val_losses = []
     val_accuracies = []
+
+    # Ensuring the checkpoint directory exists
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    logger.info(f"Checkpoint directory available at: {checkpoint_dir}")
 
     for epoch in range(1, epochs + 1):
         # Training one epoch
@@ -59,11 +65,10 @@ def train(
         val_accuracies.append(validation_accuracy)
 
         print(f"Epoch: {epoch}")
-        print(f"    Training loss: {train_loss:.2f}")
         if use_train_accuracy:
             print(f"    Training accuracy: {train_accuracy:.2f}")
-        print(f"    Validation loss: {validation_loss:.2f}")
         print(f"    Validation accuracy: {validation_accuracy:.2f}")
+        
         logger.info(
             f"Epoch {epoch}: Train Loss={train_loss:.4f}, "
             f"Train Acc={train_accuracy:.4f}, "
@@ -71,6 +76,22 @@ def train(
             f"Val Acc={validation_accuracy:.4f}"
         )
 
+        # Checkpointing
+        try:
+            checkpoint_path = os.path.join(checkpoint_dir, f"checkpoint_epoch_{epoch}.pth")
+            
+            # Saving the model state, optimizer state, and current metrics
+            torch.save({
+                'epoch': epoch,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'loss': validation_loss,
+                'accuracy': validation_accuracy,
+            }, checkpoint_path)
+            
+            logger.info(f"Checkpoint saved successfully for Epoch {epoch} to {checkpoint_path}")
+
+        except Exception as e:
+            logger.error(f"Error saving checkpoint for Epoch {epoch}: {e}")
+
     return train_losses, val_losses, train_accuracies, val_accuracies
-
-
