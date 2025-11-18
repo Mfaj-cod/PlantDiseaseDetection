@@ -6,8 +6,8 @@ logger.setLevel(logging.INFO)
 # formatter
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-# file handler only (no console output)
-fh = logging.FileHandler('logs/app.log')
+# file handler
+fh = logging.FileHandler('logs/training.log')
 fh.setLevel(logging.INFO)
 fh.setFormatter(formatter)
 
