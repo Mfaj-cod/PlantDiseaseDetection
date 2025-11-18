@@ -1,9 +1,9 @@
 <div align="center">
 
-# 🌿✨ **PLANT DISEASE DETECTION**  
-### _AI-powered Deep Learning Web App for Leaf Disease Detection and suggesting remedy_  
+# 🌿✨ **PLANT DISEASE DETECTION**  
+### _AI-powered Deep Learning Web App for Leaf Disease Detection and suggesting remedy_  
 
-🧠 Built with **PyTorch**, **Flask**, and **Computer Vision**  
+🧠 Built with **PyTorch**, **Flask**, and **Computer Vision**  
 📸 Upload or Capture live plant images and get instant predictions with suggested remedies in hindi.
 
 ![Python](https://img.shields.io/badge/Python-3.9-blue?logo=python)
@@ -18,14 +18,14 @@
 ---
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/11388939/172873216-2e004c1e-81da-4e4f-a00f-2d5648a52764.gif" width="80%">
+  <img src="https://user-images.githubusercontent.com/11388939/172873216-2e004c1e-81da-4e4f-a00f-2d5648a52764.gif" width="80%">
 </div>
 
 ---
 
 ## 🧭 **Overview**
 
-This project is a **Deep Learning–powered web application** that detects **plant leaf diseases** in real time 🌱.  
+This project is a **Deep Learning–powered web application** that detects **plant leaf diseases** in real time 🌱.  
 It uses a **Convolutional Neural Network (CNN)** trained on plant disease datasets and provides an interactive **Flask web interface** for predictions and suggesting remedies using **gemini api**.
 
 ---
@@ -45,55 +45,65 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 
 ## 🧠 **Model Architecture**
 <ol>
-    <li>Input (3×224×224)</li>
-    <li>Conv Block 1
-        <ol>
-            <li>Conv2D(3 → 16, 3×3)</li>
-            <li>ReLU</li>
-            <li>MaxPool(2×2)</li>
-        </ol>
-    </li>
-    <li>Conv Block 2
-        <ol>
-            <li>Conv2D(16 → 32, 3×3)</li>
-            <li>ReLU</li>
-            <li>MaxPool(2×2)</li>
-        </ol>
-    </li>
-    <li>Conv Block 3
-        <ol>
-            <li>Conv2D(32 → 64, 3×3)</li>
-            <li>ReLU</li>
-            <li>MaxPool(2×2)</li>
-        </ol>
-    </li>
-    <li>Classifier
-        <ol>
-            <li>Flatten</li>
-            <li>Dropout(0.5)</li>
-            <li>Linear(642828 → 500)</li>
-            <li>ReLU</li>
-            <li>Dropout</li>
-            <li>Linear(500 → num_classes)</li>
-        </ol>
-    </li>
+    <li>Input (3×224×224)</li>
+    <li>Conv Block 1
+        <ol>
+            <li>Conv2D(3 → 16, 3×3)</li>
+            <li>ReLU</li>
+            <li>MaxPool(2×2)</li>
+        </ol>
+    </li>
+    <li>Conv Block 2
+        <ol>
+            <li>Conv2D(16 → 32, 3×3)</li>
+            <li>ReLU</li>
+            <li>MaxPool(2×2)</li>
+        </ol>
+    </li>
+    <li>Conv Block 3
+        <ol>
+            <li>Conv2D(32 → 64, 3×3)</li>
+            <li>ReLU</li>
+            <li>MaxPool(2×2)</li>
+        </ol>
+    </li>
+    <li>Classifier
+        <ol>
+            <li>Flatten</li>
+            <li>Dropout(0.5)</li>
+            <li>Linear(642828 → 500)</li>
+            <li>ReLU</li>
+            <li>Dropout</li>
+            <li>Linear(500 → num_classes)</li>
+        </ol>
+    </li>
 </ol>
 
 ---
 
-📉 **Loss:** CrossEntropyLoss  
-⚡ **Optimizer:** Adam (lr=0.001)  
-🎯 **Accuracy:** ~93% Validation Accuracy  
+📉 **Loss:** CrossEntropyLoss  
+⚡ **Optimizer:** Adam (lr=0.001)  
+🎯 **Accuracy:** ~94% Validation Accuracy  
+
+---
+
+## ✨ **Training Stability and Checkpointing**
+
+To prevent loss of progress due to interruptions (like power failure or system error), the training pipeline implements **epoch-based checkpointing**.
+
+* **Saving:** After every epoch, the model's state and optimizer's state are saved to the `artifacts/checkpoints` directory.
+* **Location:** Checkpoints are saved as `artifacts/checkpoints/checkpoint_epoch_X.pth` files.
+* **Recovery:** If training stops, you can **load the last saved checkpoint** and resume training from the next epoch, saving significant time.
 
 ---
 
 ## 🚀 **Web App Features**
 
-🌾 Upload an image from your device  
-📸 Capture a live image using your webcam  
-🤖 Get instant disease predictions powered by CNN  
-🌗 Beautiful dark UI design  
-💬 Ready for cloud deployment  
+🌾 Upload an image from your device  
+📸 Capture a live image using your webcam  
+🤖 Get instant disease predictions powered by CNN  
+🌗 Beautiful dark UI design  
+💬 Ready for cloud deployment  
 🧑‍🌾 Gemini-powered remedy suggestions for diagnosed diseases
 
 ---
@@ -102,31 +112,31 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 
 1. Create a Google AI Studio API key at [ai.google.dev](https://ai.google.dev/).
 2. Export the key before starting the Flask app:
-   ```bash
-   export GEMINI_API_KEY="your-api-key"
-   ```
-   On Windows PowerShell:
-   ```powershell
-   setx GEMINI_API_KEY "your-api-key"
-   ```
+   ```bash
+   export GEMINI_API_KEY="your-api-key"
+   ```
+   On Windows PowerShell:
+   ```powershell
+   setx GEMINI_API_KEY "your-api-key"
+   ```
 3. (Optional) Override the default model with `GEMINI_MODEL_NAME` (defaults to `gemini-1.5-flash`).
 4. Install project requirements to include the Gemini SDK:
-   ```bash
-   pip install -r requirements.txt
-   ```
+   ```bash
+   pip install -r requirements.txt
+   ```
 Once configured, every prediction response includes an actionable remedy plan generated by Gemini.
 
 ---
 
 ## 🌿 Training Highlights
 
-| Metric                 | Value         |
+| Metric                 | Value         |
 | :--------------------- | :------------ |
-| 🧮 Training Accuracy   | 95%           |
-| 🧾 Validation Accuracy | 93%           |
-| 🧠 Loss Function       | Cross-Entropy |
-| ⚡ Optimizer           | Adam          |
-| 🕒 Epochs              | 8             |
+| 🧮 Training Accuracy   | 97%           |
+| 🧾 Validation Accuracy | 94%           |
+| 🧠 Loss Function       | Cross-Entropy |
+| ⚡ Optimizer           | Adam          |
+| 🕒 Epochs              | 5             |
 
 ---
 
@@ -137,9 +147,9 @@ Once configured, every prediction response includes an actionable remedy plan ge
 <p style="font-size: 1.1rem; margin: 12px 0;">💡 Take a live photo using your webcam directly in the browser:</p>
 
 <div style="background: #0b1220; padding: 20px; border-radius: 10px; max-width: 600px; margin: 20px auto; color: #dbe9d9;">
-    <p style="margin: 10px 0;"><strong>Click 📸 Capture Photo</strong></p>
-    <p style="margin: 10px 0;"><strong>Then click Predict from Camera</strong></p>
-    <p style="margin: 10px 0;"><strong>Get instant results using your trained CNN model 🚀</strong></p>
+    <p style="margin: 10px 0;"><strong>Click 📸 Capture Photo</strong></p>
+    <p style="margin: 10px 0;"><strong>Then click Predict from Camera</strong></p>
+    <p style="margin: 10px 0;"><strong>Get instant results using your trained CNN model 🚀</strong></p>
 </div>
 
 </div>
@@ -149,33 +159,33 @@ Once configured, every prediction response includes an actionable remedy plan ge
 
 ## ❤️ Acknowledgements
 <div class="acknowledgements" style="background:#0b1220;color:#dbe9d9;padding:16px;border-radius:10px;max-width:760px;margin:12px auto;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
-    <h3 style="margin:0 0 8px 0;text-align:center;">🌟 Special thanks to</h3>
-    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
-        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
-            <div>
-                <strong>🌱 WorldQuant University</strong>
-                <div style="font-size:0.95rem;color:#a9c4a7;">for the Deep Learning Foundations</div>
-            </div>
-        </li>
-        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
-            <div>
-                <strong>🔥 PyTorch</strong>
-                <div style="font-size:0.95rem;color:#a9c4a7;">for making model building intuitive</div>
-            </div>
-        </li>
-        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
-            <div>
-                <strong>🧩 Flask</strong>
-                <div style="font-size:0.95rem;color:#a9c4a7;">for the minimalistic yet powerful web backend</div>
-            </div>
-        </li>
-        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
-            <div>
-                <strong>👩‍💻 Me</strong>
-                <div style="font-size:0.95rem;color:#a9c4a7;">for taking the time to make plants healthier <span style="margin-left:6px;">🌿</span></div>
-            </div>
-        </li>
-    </ul>
+    <h3 style="margin:0 0 8px 0;text-align:center;">🌟 Special thanks to</h3>
+    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
+        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
+            <div>
+                <strong>🌱 WorldQuant University</strong>
+                <div style="font-size:0.95rem;color:#a9c4a7;">for the Deep Learning Foundations</div>
+            </div>
+        </li>
+        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
+            <div>
+                <strong>🔥 PyTorch</strong>
+                <div style="font-size:0.95rem;color:#a9c4a7;">for making model building intuitive</div>
+            </div>
+        </li>
+        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
+            <div>
+                <strong>🧩 Flask</strong>
+                <div style="font-size:0.95rem;color:#a9c4a7;">for the minimalistic yet powerful web backend</div>
+            </div>
+        </li>
+        <li style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);">
+            <div>
+                <strong>👩‍💻 Me</strong>
+                <div style="font-size:0.95rem;color:#a9c4a7;">for taking the time to make plants healthier <span style="margin-left:6px;">🌿</span></div>
+            </div>
+        </li>
+    </ul>
 </div>
 
 ---
@@ -187,4 +197,3 @@ Once configured, every prediction response includes an actionable remedy plan ge
 🚀 Share it
 
 <img src="https://img.shields.io/badge/Framework-PyTorch-orange?style=for-the-badge&logo=pytorch"/> <img src="https://img.shields.io/badge/Web-Framework-000000?style=for-the-badge&logo=flask"/> <img src="https://img.shields.io/badge/Frontend-HTML/CSS/JS-yellow?style=for-the-badge&logo=html5"/> </div>
-
