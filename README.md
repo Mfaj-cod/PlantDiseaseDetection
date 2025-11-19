@@ -43,6 +43,20 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 
 ---
 
+## **Predictions Available for:**
+|                      |                      |
+|----------------------|----------------------|
+| Apple                | Grape                |
+| Blueberry            | Orange               |
+| Cherry(including sour)| Peach               |
+| Corn (maize)         | Pepper, bell         |
+| Potato               | Raspberry            |
+| Soybean              | Squash               |
+| Strawberry           | Tomato               |
+
+
+---
+
 ## 🧠 **Model Architecture**
 <ol>
     <li>Input (3×224×224)</li>
@@ -132,7 +146,7 @@ Once configured, every prediction response includes an actionable remedy plan ge
 
 | Metric                 | Value         |
 | :--------------------- | :------------ |
-| 🧮 Training Accuracy   | 97%           |
+| 🧮 Training Accuracy   | 98%        |
 | 🧾 Validation Accuracy | 94%           |
 | 🧠 Loss Function       | Cross-Entropy |
 | ⚡ Optimizer           | Adam          |
