@@ -45,5 +45,5 @@ def create_model_loss_optim(num_classes):
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-    logger.info("Model, loss function, and optimizer created.")
+    # logger.info("Model, loss function, and optimizer created.")
     return model, loss_fn, optimizer
