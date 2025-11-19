@@ -44,7 +44,7 @@ It uses a **Convolutional Neural Network (CNN)** trained on plant disease datase
 ---
 
 ## **Predictions Available for:**
-|                      |                      |
+
 |----------------------|----------------------|
 | Apple                | Grape                |
 | Blueberry            | Orange               |
