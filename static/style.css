@@ -294,6 +294,12 @@ video, canvas {
   line-height: 1.55;
 }
 
+.available-classes ul {
+  columns: 2; /* or 3 if you're feeling adventurous */
+  padding-left: 20px;
+}
+
+
 /* Responsive */
 @media (max-width: 850px) {
   .layout {

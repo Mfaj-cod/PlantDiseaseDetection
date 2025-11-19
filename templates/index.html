@@ -66,6 +66,15 @@
           <p>{{ remedy|safe if remedy else 'पत्ती की तस्वीर अपलोड करें या कैप्चर करें ताकि आप एक कृत्रिम बुद्धिमत्ता द्वारा तैयार उपचार और रोकथाम योजना प्राप्त कर सकें।' }}</p>
         </div>
       </div>
+      <div class="available-classes">
+        <h3>Prediction available for:</h3>
+          <ul>
+          {% for c in classes %}
+            <li>{{ c }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
 
       <div class="facts">
         <div class="facts-header">खेती की जानकारी</div>
