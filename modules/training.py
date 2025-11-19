@@ -70,9 +70,9 @@ def train(
         print(f"    Validation accuracy: {validation_accuracy:.2f}")
         
         logger.info(
-            f"Epoch {epoch}: Train Loss={train_loss:.4f}, "
-            f"Train Acc={train_accuracy:.4f}, "
-            f"Val Loss={validation_loss:.4f}, "
+            f"\nEpoch {epoch}: Train Loss={train_loss:.4f},\n"
+            f"Train Acc={train_accuracy:.4f},\n"
+            f"Val Loss={validation_loss:.4f},\n"
             f"Val Acc={validation_accuracy:.4f}"
         )
 
