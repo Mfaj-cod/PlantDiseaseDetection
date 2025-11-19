@@ -19,11 +19,11 @@ app = Flask(__name__)
 
 
 # model architecture
-num_classes = 23  #the number of classes
+num_classes = 38  #the number of classes
 model, _, _ = create_model_loss_optim(num_classes)
 
 # Loading saved weights
-model_path = "artifacts/model.pth"
+model_path = "artifacts/ModelPlus.pth"
 model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
 logger.info(f"Loaded model weights from {model_path}")
 
@@ -143,7 +143,7 @@ def upload_predict():
         remedy = get_disease_remedy(prediction)
         return render_template('index.html', prediction=prediction, remedy=remedy)
     
-    logger.info("problem in rendering uploaded page.")
+    # logger.info("problem in rendering uploaded page.")
     return render_template('index.html', prediction=None, remedy=None)
 
 
