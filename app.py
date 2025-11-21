@@ -22,9 +22,13 @@ app = Flask(__name__)
 num_classes = 38
 model, _, _ = create_model_loss_optim(num_classes)
 
-# Loading saved weights
-model_path = "artifacts/ModelPlus.pth"
-model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
+# Loading saved weights for the best performing checkpoint(i.e. checkpoint_epoch_4.pth)
+model_path = "artifacts/checkpoints/checkpoint_epoch_4.pth"
+checkpoint = torch.load(model_path, map_location=torch.device("cpu"))
+
+model.load_state_dict(checkpoint["model_state_dict"])
+# model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
+
 logger.info(f"Loaded model weights from {model_path}")
 
 # to evaluation mode

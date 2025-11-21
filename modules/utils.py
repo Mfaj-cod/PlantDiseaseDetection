@@ -33,6 +33,7 @@ def get_mean_std(loader):
 
 
 def class_counts(dataset):
+    """Returns a Pandas Series with counts of each class in the dataset."""
     c = Counter(x[1] for x in tqdm(dataset))
     try:
         class_to_index = dataset.class_to_idx
