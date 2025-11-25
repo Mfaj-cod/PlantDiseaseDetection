@@ -140,8 +140,8 @@
         previewInfo.textContent = 'कैमरा तैयार है। एक तस्वीर लें।';
         setCaptureEnabled(true);
       } catch (err) {
-        console.error('कैमरा तक पहुंचने में त्रुटि: ', err);
-        cameraError.textContent = 'कैमरा तक पहुंचने में असमर्थ। अनुमतियों की जांच करें या किसी अन्य डिवाइस का प्रयास करें।';
+        console.error('Error in camera access: ', err);
+        cameraError.textContent = "Couldn't access camera. Check permissions or use other device.";
         setCaptureEnabled(false);
       }
     }
@@ -156,19 +156,18 @@
       setCaptureEnabled(false);
     }
 
-    // UI स्थिति को शुरु करें
+
     setCaptureEnabled(false);
     previewInfo.textContent = 'कैमरा सक्षम करें, फिर भविष्यवाणी करने से पहले एक तस्वीर लें।';
 
     enableCameraBtn.addEventListener('click', () => startCamera(useBackCheckbox.checked));
     stopCameraBtn.addEventListener('click', stopCamera);
 
-    // वीडियो से फ्रेम कैप्चर करें
     captureButton.addEventListener('click', () => {
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
     });
 
-    // कैप्चर की गई तस्वीर Flask को भेजें
+
     sendButton.addEventListener('click', () => {
       canvas.toBlob(blob => {
         const formData = new FormData();
